@@ -11,7 +11,14 @@ module Spectabular
     end
 
     def columns
-      @columns.flatten
+      case @columns
+       when Array
+          @columns.flatten
+        when Hash
+          @columns.map {|header,helper| {:header => header, :helper => helper}}
+      else
+        [@columns]
+      end
     end
 
     def empty?
@@ -43,7 +50,7 @@ module Spectabular
         record.send column.to_sym
       else
         if column[:helper]
-          context.send(column[:helper],record)
+         column[:helper].respond_to?(:call) ? column[:helper].call(record) : context.send(column[:helper],record)
         elsif column[:value] 
           record.send column[:value]
         else
@@ -65,7 +72,7 @@ module Spectabular
         if column.respond_to? :to_sym
           column.to_s.humanize
         else
-          column[:header].to_s
+          column[:header].is_a?(Symbol) ? column[:header].to_s.humanize : column[:header].to_s
         end
       end
     end

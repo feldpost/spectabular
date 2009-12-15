@@ -1,42 +1,45 @@
 module Spectabular
   module TableHelper
-
-    def table_for_collection(*args,&block)
-      options = args.extract_options!
-      options = spectabular_options(options)      
-      options.reverse_merge!({:columns => args, :context => self})
-      @table = Spectabular::Table.new(options)
+    
+    def table_for(collection,*columns)
+      columns = columns.first if columns.size <= 1
+      columns ||= default_columns_for(collection)
+      @table = Spectabular::Table.new(  :collection => instance_variable_get("@#{collection}"), 
+                                        :collection_name => collection.to_s.humanize, 
+                                        :columns => columns, 
+                                        :context => self
+                                        )
       if @table.empty?
         @table.empty_message
       else
-        content_tag(:table, spectabular_header + spectabular_body) + spectabular_pagination
+        content_tag(:table, "\n" + [spectabular_header,spectabular_body].join("\n")) + "\n" + spectabular_pagination
       end
     end
 
     protected
 
     def spectabular_header
-      content_tag(:thead,
-      content_tag(:tr,
+      content_tag(:thead, "\n" +
+      content_tag(:tr, "\n" +
         @table.headers.map { |header| 
-            content_tag(:th, header) 
-          }.join
-      )
+            content_tag(:th, header)
+          }.join("\n") + "\n"
+      ) + "\n"
       )
     end
 
     def spectabular_body
-      content_tag(:tbody, 
+      content_tag(:tbody, "\n" +
       @table.rows.map { |record,row| 
-        content_tag(:tr, spectabular_row(row), :id => dom_id(record), :class => row_class_for(record) )
-      }.join
+        content_tag(:tr, "\n" + spectabular_row(row), :id => dom_id(record), :class => row_class_for(record) )
+      }.join("\n")  + "\n"
       )
     end
 
     def spectabular_row(row)
       row.map { |name,cell| 
-        content_tag :td, cell, :class => name
-      }.join
+        content_tag :td, cell.to_s, :class => name
+      }.join("\n")  + "\n"
     end
     
     def row_class_for(record)
@@ -52,16 +55,25 @@ module Spectabular
       return "" unless @table.will_paginate?
       content_tag(:p, will_paginate(@table.collection), :class => 'pagination')
     end
-
-    def spectabular_options(options)
-      if options[:collection].blank?
-        collection = instance_variable_get("@#{controller.controller_name}")
-        collection_name = controller.controller_name.humanize
-      else
-        collection = instance_variable_get("@#{options[:collection]}")
-        collection_name = options[:collection].to_s.humanize
+    
+    def default_columns_for(collection)
+      returning({}) do |columns_hash|
+        collection.to_s.classify.constantize.content_columns.map do |c|
+          columns_hash[c.name.to_sym] = Proc.new {|a| default_formatting_for(a, c.name, c.type) }
+        end
       end
-      options.merge!({:collection => collection, :collection_name => collection_name})
+    end
+    
+    def default_formatting_for(record,name,column_type)
+      attribute = record.send(name)
+      case column_type
+      when :datetime
+        attribute.not_blank? ? attribute.strftime("%m/%d/%Y %H:%M:%S") : ""
+      when :boolean
+        attribute == true ? "Yes" : "No"
+      else
+        attribute
+      end
     end
 
   end
