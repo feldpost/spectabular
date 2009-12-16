@@ -22,6 +22,10 @@ class OrderedHash < Hash
   def each
     @keys.each { |k| yield k, self[k] }
   end
+  
+  def map
+    @keys.map { |k| yield k, self[k] }
+  end
 
   def each_key
     @keys.each { |k| yield k }

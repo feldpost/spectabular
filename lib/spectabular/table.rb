@@ -15,7 +15,7 @@ module Spectabular
        when Array
           @columns.flatten
         when Hash
-          @columns.map {|header,helper| {:header => header, :helper => helper}}
+          @columns.sort {|a,b| a[0].to_s <=> b[0].to_s }.map {|g| {:header => g[0].to_s.gsub(/^\d+\s?-\s?/,''), :helper => g[1]}}
       else
         [@columns]
       end
