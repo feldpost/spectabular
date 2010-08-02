@@ -34,7 +34,7 @@ module Spectabular
     end
 
     def rows
-      returning OrderedHash.new do |collection_hash|
+       OrderedHash.new.tap do |collection_hash|
         collection.each do |record|
           column_hash = OrderedHash.new
             columns.each_with_index do |column,i|

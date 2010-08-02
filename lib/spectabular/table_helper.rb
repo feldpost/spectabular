@@ -57,7 +57,7 @@ module Spectabular
     end
     
     def default_columns_for(collection)
-      returning(OrderedHash.new) do |columns_hash|
+      OrderedHash.new.tap do |columns_hash|
         collection.to_s.classify.constantize.content_columns.map do |c|
           columns_hash[c.name.to_sym] = Proc.new {|a| default_formatting_for(a, c.name, c.type) }
         end
