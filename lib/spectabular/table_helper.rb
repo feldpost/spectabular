@@ -37,8 +37,9 @@ module Spectabular
     end
 
     def spectabular_row(row)
+      column_number = 0
       row.map { |name,cell| 
-        content_tag :td, cell.to_s, :class => name
+        content_tag :td, cell.to_s, :class => cell_class_for(name,column_number+=1)
       }.join("\n")  + "\n"
     end
     
@@ -49,6 +50,10 @@ module Spectabular
         token << (record.send(is_active) ? "active" : 'inactive')
       end
       token.join(" ")
+    end
+    
+    def cell_class_for(name,column_number)
+      column_number == 1 ? "tbl-#{name} lead" : name
     end
 
     def spectabular_pagination

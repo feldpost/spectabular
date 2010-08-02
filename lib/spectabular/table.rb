@@ -34,7 +34,7 @@ module Spectabular
     end
 
     def rows
-       OrderedHash.new.tap do |collection_hash|
+      OrderedHash.new.tap do |collection_hash|
         collection.each do |record|
           column_hash = OrderedHash.new
             columns.each_with_index do |column,i|
@@ -84,7 +84,7 @@ module Spectabular
     protected
 
     def collection_supports_pagination?
-      collection.respond_to? :per_page
+      collection.respond_to? :total_pages
     end
 
   end
