@@ -15,11 +15,13 @@ Run `bundle install`.
 
 ## Usage
 
-In your controller:
+Assuming you have this in your controller:
 
 ```ruby
 @articles = Article.all
 ```
+
+In your views:
 
 ### Default:
 
@@ -43,7 +45,7 @@ Only shows the _title_ and _description_ attributes.
 ```ruby
   table_for :articles,
             "Title" => :helper_method,
-						"Description" => Proc.new {|record| record.description }
+            "Description" => Proc.new {|record| record.description }
 ```
 
 You can specify a helper method or block to be called. Both block and helper method take one argument, the record being passed to the table row.
@@ -55,7 +57,7 @@ Because Hashes in Ruby 1.8 are not ordered, in the above example the column orde
 ```ruby
   table_for :articles,
             "1-Title" => :helper_method,
-						"2-Description" => Proc.new {|record| record.description }
+            "2-Description" => Proc.new {|record| record.description }
 ```
 
 The numeration markers are removed and column order is maintained. This is not necessary if you are using Ruby 1.9.
