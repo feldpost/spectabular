@@ -12,7 +12,7 @@ module Spectabular
       if @table.empty?
         @table.empty_message
       else
-        content_tag(:table, "\n" + [spectabular_header,spectabular_body].join("\n")) + "\n" + spectabular_pagination
+        content_tag(:table, "\n" + [spectabular_header,spectabular_body].join("\n"), :class => "spectabular") + "\n" + spectabular_pagination
       end
     end
 
