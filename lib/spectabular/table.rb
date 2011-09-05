@@ -63,7 +63,7 @@ module Spectabular
       if will_paginate.nil?
         collection_supports_pagination?
       else
-        paginate
+        will_paginate
       end
     end
 

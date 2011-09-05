@@ -1,5 +1,5 @@
 module Spectabular
-  module TableHelper
+  module Helper
     
     def table_for(collection,*columns)
       columns = columns.first if columns.size <= 1
