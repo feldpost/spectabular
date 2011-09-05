@@ -15,7 +15,7 @@ module Spectabular
        when Array
           @columns.flatten
         when Hash
-          @columns.sort {|a,b| a[0].to_s <=> b[0].to_s }.map {|g| {:header => g[0].to_s.gsub(/^\d+\s?-\s?/,''), :helper => g[1]}}
+          sorted_hash_for(@columns).map {|g| {:header => g[0].to_s.gsub(/^\d+\s?-\s?/,''), :helper => g[1]}}
       else
         [@columns]
       end
@@ -34,9 +34,9 @@ module Spectabular
     end
 
     def rows
-      OrderedHash.new.tap do |collection_hash|
+      ordered_hash.tap do |collection_hash|
         collection.each do |record|
-          column_hash = OrderedHash.new
+          column_hash = ordered_hash
             columns.each_with_index do |column,i|
               column_hash[headers[i].parameterize] = cell(column,record) || default_empty
             end
@@ -82,6 +82,22 @@ module Spectabular
     end
 
     protected
+    
+    def ordered_hash(*args)
+      if RUBY_VERSION < '1.9'
+        Hash.new(*args)
+      else
+        OrderedHash.new(*args)
+      end
+    end
+    
+    def sorted_hash_for(items)
+      if RUBY_VERSION < '1.9'
+        items.sort {|a,b| a[0].to_s <=> b[0].to_s }
+      else
+        items
+      end
+    end
 
     def collection_supports_pagination?
       collection.respond_to? :total_pages
