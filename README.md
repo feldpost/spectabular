@@ -2,6 +2,11 @@
 
 _Spectabular_ provides a helper method which turns ActiveModel resources into tabular displays. It provides some minimal customization options.
 
+## Compatibility
+
+_Spectabular_ 2 is only compatible with Rails 3.0 and above. It has been tested on Rails 3.1 and 3.2.
+
+If you are using Rails 2, please use _Spectabular_ 1 (*Rails-2* branch).
 
 ## Installation
 

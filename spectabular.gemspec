@@ -1,7 +1,10 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
+
+# Maintain your gem's version:
 require "spectabular/version"
 
+# Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "spectabular"
   s.version     = Spectabular::VERSION
@@ -11,14 +14,11 @@ Gem::Specification.new do |s|
   s.summary     = %q{Generate tabular displays for Rails models}
   s.description = %q{Spectabular provides a helper method which turns ActiveModel resources into tabular displays. It provides some minimal customization options.}
 
-  s.rubyforge_project = "spectabular"
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.require_paths = ["lib"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.test_files = Dir["test/**/*"]
 
-  # specify any dependencies here; for example:
-  # s.add_development_dependency "rspec"
-  # s.add_runtime_dependency "rest-client"
+  s.add_dependency "rails", "~> 3.2.0.rc2"
+
+  s.add_development_dependency "sqlite3"
 end
