@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.description = %q{Spectabular provides a helper method which turns ActiveModel resources into tabular displays. It provides some minimal customization options.}
 
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 3.2.0.rc2"
