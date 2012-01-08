@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    spectabular (1.0.0)
+    spectabular (2.0.0)
       rails (~> 3.2.0.rc2)
 
 GEM
