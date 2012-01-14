@@ -2,7 +2,6 @@ module Spectabular
   module Helper
     
     def table_for(collection,*columns)
-      @column_number = 0
       columns = columns.first if columns.size <= 1
       columns ||= default_columns_for(collection)
       @table = Spectabular::Table.new(  :collection => instance_variable_get("@#{collection}"), 
@@ -46,6 +45,7 @@ module Spectabular
     
     def mapped_body
       @table.rows.map do |record,row| 
+        @column_number = 0
         content_tag(:tr, join_formatted(mapped_row(row)), :id => dom_id(record), :class => row_class_for(record) )
       end
     end
