@@ -15,7 +15,7 @@ module Spectabular
        when Array
           @columns.flatten
         when Hash
-          sorted_hash_for(@columns).map {|g| {:header => g[0].to_s.gsub(/^\d+\s?-\s?/,''), :helper => g[1]}}
+          sorted_hash_for(@columns).map {|g| {:header => header_for(g[0]), :helper => g[1]}}
       else
         [@columns]
       end
@@ -101,6 +101,14 @@ module Spectabular
 
     def collection_supports_pagination?
       collection.respond_to? :total_pages
+    end
+    
+    def header_for(name)
+      if name.respond_to?(:sub)
+        name.sub(/^\d+\s?-\s?/,'')
+      else
+        name.to_s.titlecase
+      end
     end
 
   end
