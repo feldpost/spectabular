@@ -1,7 +1,7 @@
 module Spectabular
 
   class Table
-    attr_accessor :columns, :skip_sorting_row, :collection, :collection_name, :context, :will_paginate
+    attr_accessor :columns, :skip_sorting_row, :collection, :collection_name, :context
     attr_writer :default_empty
 
     def initialize(options={})
@@ -59,14 +59,6 @@ module Spectabular
       end
     end
 
-    def will_paginate?
-      if will_paginate.nil?
-        collection_supports_pagination?
-      else
-        will_paginate
-      end
-    end
-
     def headers
       @headers ||= columns.map do |column|
         if column.respond_to? :to_sym
@@ -97,10 +89,6 @@ module Spectabular
       else
         items
       end
-    end
-
-    def collection_supports_pagination?
-      collection.respond_to? :total_pages
     end
     
     def header_for(name)

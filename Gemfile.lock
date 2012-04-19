@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    spectabular (2.0.1)
+    spectabular (2.1)
       rails (~> 3.2.0.rc2)
 
 GEM
@@ -34,7 +34,7 @@ GEM
     activesupport (3.2.0.rc2)
       i18n (~> 0.6)
       multi_json (~> 1.0)
-    arel (3.0.0)
+    arel (3.0.2)
     builder (3.0.0)
     erubis (2.7.0)
     hike (1.2.1)
@@ -48,7 +48,7 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mime-types (1.17.2)
+    mime-types (1.18)
     multi_json (1.0.4)
     polyglot (0.3.3)
     rack (1.4.0)
@@ -86,7 +86,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.31)
+    tzinfo (0.3.33)
 
 PLATFORMS
   ruby
